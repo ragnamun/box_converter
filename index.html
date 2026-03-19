@@ -379,7 +379,23 @@ textarea.quote-input-field { min-height: 64px; }
 }
 .mb-quote-input::placeholder { color: var(--text3); }
 textarea.mb-quote-input { min-height: 60px; }
+
+/* 견적서 복사 버튼 */
+.quote-copy-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin-top: 10px;
+  padding: 12px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.quote-copy-btn:hover { background: var(--accent2); }
+.quote-copy-btn:active { transform: scale(0.98); }
+.quote-copy-btn.copied { background: #2a7a55; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -518,6 +534,14 @@ textarea.mb-quote-input { min-height: 60px; }
         <textarea class="quote-input-field" id="dt-q-note" placeholder="비고 입력"></textarea>
       </div>
     </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:10px;">
+    <button class="quote-copy-btn" id="dt-copyBtn" onclick="copyQuote('dt','clipboard')" style="flex:1">
+      클립보드에 복사
+    </button>
+    <button class="quote-copy-btn" id="dt-dlBtn" onclick="copyQuote('dt','download')" style="flex:1;background:var(--accent2)">
+      이미지 저장
+    </button>
   </div>
 
 
@@ -658,6 +682,14 @@ textarea.mb-quote-input { min-height: 60px; }
         <div class="mb-quote-cell-label" style="padding:10px 13px;white-space:nowrap;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;padding-top:11px;">비고</div>
         <textarea class="mb-quote-input" id="mb-q-note" placeholder="비고 입력" style="border-left:1px solid var(--border);min-height:58px;"></textarea>
       </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px;">
+      <button class="quote-copy-btn" id="mb-copyBtn" onclick="copyQuote('mb','clipboard')" style="flex:1">
+        클립보드에 복사
+      </button>
+      <button class="quote-copy-btn" id="mb-dlBtn" onclick="copyQuote('mb','download')" style="flex:1;background:var(--accent2)">
+        이미지 저장
+      </button>
     </div>
 
   </div>
@@ -962,6 +994,132 @@ buildVisual('dt-layerVisual', dtGrade);
 dtBuildLayers();
 buildVisual('mb-layerVisual', mbGrade);
 mbBuildLayers();
+
+
+/* ── 견적서 이미지 복사 ── */
+function copyQuote(prefix, mode) {
+  var card   = document.getElementById(prefix + '-quoteCard');
+  var copyBtn = document.getElementById(prefix + '-copyBtn');
+  var dlBtn   = document.getElementById(prefix + '-dlBtn');
+  var btn     = (mode === 'download') ? dlBtn : copyBtn;
+  if (!card || !btn) return;
+
+  var origText = btn.textContent.trim();
+  btn.textContent = '생성 중...';
+  btn.disabled = true;
+
+  /* input/textarea → 텍스트 div로 임시 교체 (html2canvas가 input값 미렌더링) */
+  var replaced = [];
+  card.querySelectorAll('input[type="text"], textarea').forEach(function(el) {
+    var div = document.createElement('div');
+    div.textContent = el.value || '';
+    div.style.cssText = [
+      'display:block','box-sizing:border-box',
+      'width:' + el.offsetWidth + 'px',
+      'min-height:' + el.offsetHeight + 'px',
+      'padding:10px 14px',
+      'font-family:sans-serif',
+      'font-size:14px',
+      'color:#1c1a18',
+      'background:#fff',
+      'white-space:pre-wrap',
+      'word-break:break-all',
+      'line-height:1.5'
+    ].join(';');
+    el.parentNode.insertBefore(div, el);
+    el.style.display = 'none';
+    replaced.push({el: el, div: div});
+  });
+
+  function restore() {
+    replaced.forEach(function(r) {
+      r.el.style.display = '';
+      if (r.div.parentNode) r.div.parentNode.removeChild(r.div);
+    });
+  }
+
+  html2canvas(card, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#ffffff',
+    logging: false,
+    onclone: function(doc) {
+      /* 클론된 문서에서 CSS 변수를 실제 색상으로 치환 */
+      var style = doc.createElement('style');
+      style.textContent = [
+        ':root{--accent:#1d4035;--accent2:#2d5c4e;--accent-light:#e8f2ee;--accent-mid:#c0d9d0;',
+        '--bg:#f2f1ee;--surface:#fff;--surface2:#f7f6f4;--border:#e6e3de;--border2:#ccc8c0;',
+        '--text:#1c1a18;--text2:#6a6560;--text3:#aaa69e;',
+        '--flute:#7a3520;--flute-light:#fdf0ec;--liner:#1a3358;--liner-light:#eef2f8;',
+        '--center:#5c3d10;--center-light:#faf3e8;}'
+      ].join('');
+      doc.head.appendChild(style);
+    }
+  }).then(function(canvas) {
+    restore();
+
+    if (mode === 'download') {
+      /* 다운로드 */
+      var today = new Date();
+      var ds = today.getFullYear() + ('0'+(today.getMonth()+1)).slice(-2) + ('0'+today.getDate()).slice(-2);
+      var clientEl = document.getElementById(prefix+'-q-client');
+      var clientName = (clientEl && clientEl.value.trim()) ? clientEl.value.trim() : '견적서';
+      var a = document.createElement('a');
+      a.download = clientName + '_' + ds + '.png';
+      a.href = canvas.toDataURL('image/png');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      btn.textContent = '저장 완료!';
+      btn.classList.add('copied');
+      btn.disabled = false;
+      setTimeout(function() { btn.textContent = origText; btn.classList.remove('copied'); }, 2000);
+
+    } else {
+      /* 클립보드 복사 */
+      canvas.toBlob(function(blob) {
+        if (!blob) { alertFallback(canvas, btn, origText); return; }
+        if (navigator.clipboard && window.ClipboardItem) {
+          navigator.clipboard.write([new ClipboardItem({'image/png': blob})])
+            .then(function() {
+              btn.textContent = '복사 완료!';
+              btn.classList.add('copied');
+              btn.disabled = false;
+              setTimeout(function() { btn.textContent = origText; btn.classList.remove('copied'); }, 2000);
+            })
+            .catch(function() { alertFallback(canvas, btn, origText); });
+        } else {
+          alertFallback(canvas, btn, origText);
+        }
+      }, 'image/png');
+    }
+  }).catch(function(err) {
+    restore();
+    console.error('html2canvas error:', err);
+    btn.textContent = '오류 - 이미지 저장 사용';
+    btn.disabled = false;
+    setTimeout(function() { btn.textContent = origText; }, 2500);
+  });
+}
+
+function alertFallback(canvas, btn, origText) {
+  /* 클립보드 불가 → 이미지를 새 탭에서 열어 안내 */
+  var url = canvas.toDataURL('image/png');
+  var w = window.open('', '_blank');
+  if (w) {
+    w.document.write(
+      '<html><head><title>견적서</title></head><body style="margin:0;background:#111;display:flex;flex-direction:column;align-items:center;padding:20px;">' +
+      '<p style="color:#fff;font-family:sans-serif;margin-bottom:12px;">이미지를 길게 눌러 저장하거나, 우클릭 → 이미지 복사 하세요.</p>' +
+      '<img src="' + url + '" style="max-width:100%;border-radius:8px;">' +
+      '</body></html>'
+    );
+  }
+  btn.textContent = '새 탭에서 열림';
+  btn.disabled = false;
+  setTimeout(function() { btn.textContent = origText; }, 2500);
+}
+
 </script>
 </body>
 </html>
