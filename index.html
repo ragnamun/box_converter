@@ -261,6 +261,124 @@ body.is-mobile  .layout-mobile  { display: block; }
 .mb-result .rm .rl { font-size: 9px; margin-bottom: 3px; }
 .mb-result .rm .rv { font-size: 14px; }
 .mb-result .rm .ru { font-size: 10px; }
+
+/* ════ 견적서 ════ */
+.quote-card {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+.quote-header {
+  background: var(--accent);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.quote-header-title {
+  font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.04em;
+}
+.quote-date { font-size: 12px; color: rgba(255,255,255,0.8); }
+.quote-body { padding: 0; }
+
+.quote-row {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+.quote-row:last-child { border-bottom: none; }
+
+.quote-key {
+  width: 110px; flex-shrink: 0;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border-right: 1px solid var(--border);
+  font-size: 13px; font-weight: 700; color: var(--text);
+  display: flex; align-items: center;
+  letter-spacing: 0;
+}
+.quote-val {
+  flex: 1; padding: 12px 16px;
+  font-size: 14px; font-weight: 700; color: var(--text);
+  display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+}
+.quote-val .qu { font-size: 11px; font-weight: 400; color: var(--text3); margin-left: 4px; }
+.quote-val.accent { color: var(--accent); font-size: 22px; }
+.quote-val.small   { font-size: 13px; font-weight: 500; color: var(--text); flex-wrap: wrap; gap: 4px; }
+
+.quote-tag {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px; margin-right: 4px;
+}
+.qt-liner  { background: var(--liner-light);  color: var(--liner); }
+.qt-flute  { background: var(--flute-light);  color: var(--flute); }
+.qt-center { background: var(--center-light); color: var(--center); }
+
+/* 모바일 견적서 */
+.mb-quote-card {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.mb-quote-header {
+  background: var(--accent);
+  padding: 11px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mb-quote-header-title { font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
+.mb-quote-date { font-size: 10px; color: rgba(255,255,255,0.5); }
+
+.mb-quote-price {
+  background: var(--accent-light);
+  border-bottom: 1px solid var(--accent-mid);
+  padding: 14px 14px;
+  display: flex; align-items: baseline; gap: 6px;
+}
+.mb-quote-price-label { font-size: 11px; font-weight: 700; color: var(--accent2); }
+.mb-quote-price-val   { font-size: 24px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+.mb-quote-price-unit  { font-size: 12px; color: var(--accent2); }
+
+.mb-quote-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: none;
+}
+.mb-quote-cell {
+  padding: 11px 13px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.mb-quote-cell:nth-child(2n) { border-right: none; }
+.mb-quote-cell:nth-last-child(-n+2) { border-bottom: none; }
+.mb-quote-cell-label { font-size: 10px; font-weight: 700; color: var(--text3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+.mb-quote-cell-val   { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.mb-quote-cell-val .qu { font-size: 10px; font-weight: 400; color: var(--text3); }
+.mb-quote-cell-val.small { font-size: 11px; font-weight: 500; }
+
+/* 견적서 입력 필드 */
+.quote-input-row {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+.quote-input-row:last-child { border-bottom: none; }
+.quote-input-field {
+  flex: 1; padding: 10px 14px;
+  font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+  background: #fff; border: none; outline: none; color: var(--text);
+  resize: none; line-height: 1.5;
+}
+.quote-input-field::placeholder { color: var(--text3); }
+.quote-input-field:focus { background: #fafffe; }
+textarea.quote-input-field { min-height: 64px; }
+
+/* 모바일 견적서 입력 */
+.mb-quote-input {
+  width: 100%; padding: 9px 13px;
+  font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+  background: #fff; border: none; outline: none; color: var(--text);
+  resize: none; line-height: 1.5;
+}
+.mb-quote-input::placeholder { color: var(--text3); }
+textarea.mb-quote-input { min-height: 60px; }
 </style>
 </head>
 <body>
@@ -362,6 +480,47 @@ body.is-mobile  .layout-mobile  { display: block; }
     </div>
   </div>
 
+  <!-- ⑤ 견적서 -->
+  <div class="quote-card" id="dt-quoteCard">
+    <div class="quote-header">
+      <span class="quote-header-title">견적서</span>
+      <span class="quote-date" id="dt-quoteDate"></span>
+    </div>
+    <div class="quote-body">
+      <div class="quote-input-row">
+        <div class="quote-key">거래처</div>
+        <input type="text" class="quote-input-field" id="dt-q-client" placeholder="거래처명 입력">
+      </div>
+      <div class="quote-row">
+        <div class="quote-key">원단 장</div>
+        <div class="quote-val" id="dt-q-sheetL">—</div>
+        <div class="quote-key">원단 폭</div>
+        <div class="quote-val" id="dt-q-sheetW">—</div>
+      </div>
+      <div class="quote-row">
+        <div class="quote-key">상자 규격</div>
+        <div class="quote-val" id="dt-q-spec">—</div>
+      </div>
+      <div class="quote-row">
+        <div class="quote-key">골</div>
+        <div class="quote-val" id="dt-q-grade">—</div>
+      </div>
+      <div class="quote-row">
+        <div class="quote-key">지종</div>
+        <div class="quote-val small" id="dt-q-layers">—</div>
+      </div>
+      <div class="quote-row">
+        <div class="quote-key">매당 단가</div>
+        <div class="quote-val accent" id="dt-q-price">—</div>
+      </div>
+      <div class="quote-input-row">
+        <div class="quote-key">비고</div>
+        <textarea class="quote-input-field" id="dt-q-note" placeholder="비고 입력"></textarea>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 </div>
 
@@ -453,6 +612,51 @@ body.is-mobile  .layout-mobile  { display: block; }
       <div class="mb-rg2">
         <div class="rm"><p class="rl">절수</p><p class="rv" id="mb-rCuts">—<span class="ru"> 절</span></p></div>
         <div class="rm"><p class="rl">상자 면적</p><p class="rv" id="mb-dArea">—<span class="ru"> ㎡</span></p></div>
+      </div>
+    </div>
+
+
+    <div class="mb-section-div"><span>⑤ 견적서</span></div>
+
+    <div class="mb-quote-card" id="mb-quoteCard">
+      <div class="mb-quote-header">
+        <span class="mb-quote-header-title">견적서</span>
+        <span class="mb-quote-date" id="mb-quoteDate"></span>
+      </div>
+      <div style="border-bottom:1px solid var(--border);display:flex;align-items:center;">
+        <div class="mb-quote-cell-label" style="padding:10px 13px;white-space:nowrap;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;">거래처</div>
+        <input type="text" class="mb-quote-input" id="mb-q-client" placeholder="거래처명 입력" style="border-left:1px solid var(--border);">
+      </div>
+      <div class="mb-quote-price">
+        <span class="mb-quote-price-label">매당 단가</span>
+        <span class="mb-quote-price-val" id="mb-q-price">—</span>
+        <span class="mb-quote-price-unit">원</span>
+      </div>
+      <div class="mb-quote-grid">
+        <div class="mb-quote-cell">
+          <div class="mb-quote-cell-label">원단 장</div>
+          <div class="mb-quote-cell-val" id="mb-q-sheetL">—</div>
+        </div>
+        <div class="mb-quote-cell">
+          <div class="mb-quote-cell-label">원단 폭</div>
+          <div class="mb-quote-cell-val" id="mb-q-sheetW">—</div>
+        </div>
+        <div class="mb-quote-cell">
+          <div class="mb-quote-cell-label">상자 규격</div>
+          <div class="mb-quote-cell-val small" id="mb-q-spec">—</div>
+        </div>
+        <div class="mb-quote-cell">
+          <div class="mb-quote-cell-label">골</div>
+          <div class="mb-quote-cell-val" id="mb-q-grade">—</div>
+        </div>
+        <div class="mb-quote-cell" style="grid-column:1/-1">
+          <div class="mb-quote-cell-label">지종</div>
+          <div class="mb-quote-cell-val small" id="mb-q-layers">—</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border);display:flex;align-items:flex-start;">
+        <div class="mb-quote-cell-label" style="padding:10px 13px;white-space:nowrap;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;padding-top:11px;">비고</div>
+        <textarea class="mb-quote-input" id="mb-q-note" placeholder="비고 입력" style="border-left:1px solid var(--border);min-height:58px;"></textarea>
       </div>
     </div>
 
@@ -674,6 +878,79 @@ function runCalc(prefix, grade) {
     setEl(p+'dBoxPrice', bpStr+'<span class="result-price-unit"> 원</span>');
   } else {
     setEl(p+'dBoxPrice', bpStr+'<span class="ru"> 원</span>');
+  }
+
+  /* ── 견적서 업데이트 ── */
+  updateQuote(prefix, grade, {
+    sheetL: L&&W ? (L+W)*2+join : null,
+    sheetW: L&&W&&H&&cuts ? roundWidth((W+H+wing)*cuts) : null,
+    L:L, W:W, H:H, cuts:cuts,
+    boxPrice: boxPrice
+  });
+}
+
+function updateQuote(prefix, grade, d) {
+  var g = GRADES[grade];
+  var p = prefix+'-';
+  var today = new Date();
+  var ds = today.getFullYear()+'.'+(today.getMonth()+1<10?'0':'')+(today.getMonth()+1)+'.'+(today.getDate()<10?'0':'')+today.getDate();
+
+  /* 날짜 */
+  var dateEl = document.getElementById(p+'quoteDate');
+  if (dateEl) dateEl.textContent = ds;
+
+  /* 원단 장/폭 */
+  var sL = d.sheetL ? fmt(d.sheetL)+' mm' : '—';
+  var sW = d.sheetW ? fmt(d.sheetW)+' mm' : '—';
+
+  /* 상자 규격 */
+  var spec = (d.L&&d.W&&d.H) ? d.L+' × '+d.W+' × '+d.H+' mm' : '—';
+
+  /* 지종 */
+  var attrGrm   = 'data-'+prefix+'-grm';
+  var attrName  = 'data-'+prefix+'-name';
+  var layerParts = [];
+  g.layers.forEach(function(layer, i) {
+    var ne = document.querySelector('['+attrName+'="'+i+'"]');
+    var ge = document.querySelector('['+attrGrm+'="'+i+'"]');
+    var name = (ne && ne.value.trim()) ? ne.value.trim() : layer.n;
+    var grm  = ge && ge.value ? ge.value : '';
+    layerParts.push({name:name, grm:grm, type: layer.t==='flute'?'flute':(layer.n==='중심지'?'center':'liner')});
+  });
+
+  /* 단가 */
+  var priceStr = d.boxPrice !== null && d.boxPrice !== undefined ? fmt(d.boxPrice) : '—';
+
+  if (prefix === 'dt') {
+    setTxt('dt-q-sheetL', sL);
+    setTxt('dt-q-sheetW', sW);
+    setTxt('dt-q-spec',   spec);
+    setTxt('dt-q-grade',  grade+'골');
+    /* 지종 태그 */
+    var layerEl = document.getElementById('dt-q-layers');
+    if (layerEl) {
+      layerEl.innerHTML = layerParts.map(function(lp) {
+        var cls = 'qt-'+lp.type;
+        var label = lp.name + (lp.grm ? ' '+lp.grm : '');
+        return '<span class="quote-tag '+cls+'">'+label+'</span>';
+      }).join('');
+    }
+    var qp = document.getElementById('dt-q-price');
+    if (qp) qp.innerHTML = priceStr + (priceStr!=='—' ? '<span class="qu"> 원</span>' : '');
+  } else {
+    var mbQL = document.getElementById('mb-q-sheetL'); if (mbQL) mbQL.innerHTML = sL;
+    var mbQW = document.getElementById('mb-q-sheetW'); if (mbQW) mbQW.innerHTML = sW;
+    var mbQS = document.getElementById('mb-q-spec');   if (mbQS) mbQS.textContent = spec;
+    var mbQG = document.getElementById('mb-q-grade'); if (mbQG) mbQG.textContent = grade+'골';
+    var mbQP = document.getElementById('mb-q-price');  if (mbQP) mbQP.textContent = priceStr;
+    var mbQL2 = document.getElementById('mb-q-layers');
+    if (mbQL2) {
+      mbQL2.innerHTML = layerParts.map(function(lp) {
+        var cls = 'qt-'+lp.type;
+        var label = lp.name + (lp.grm ? ' '+lp.grm : '');
+        return '<span class="quote-tag '+cls+'">'+label+'</span>';
+      }).join(' ');
+    }
   }
 }
 
