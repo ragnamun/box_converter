@@ -10,7 +10,7 @@
 
 :root {
   --bg: #f2f1ee;
-  --surface: #ffffff;
+  --surface: #fff;
   --surface2: #f7f6f4;
   --border: #e6e3de;
   --border2: #ccc8c0;
@@ -31,120 +31,42 @@
 }
 
 html { -webkit-text-size-adjust: 100%; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding-bottom: calc(20px + var(--safe-bottom));
-}
-
-/* ── 헤더 ── */
-.top-bar {
-  background: var(--accent);
-  padding: 16px 16px 14px;
-  display: flex; align-items: center; gap: 10px;
-  position: sticky; top: 0; z-index: 50;
-}
-.top-bar h1 { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -0.02em; flex: 1; }
-.grade-tag {
-  font-size: 12px; font-weight: 700; color: var(--accent);
-  background: rgba(255,255,255,0.9); border-radius: 20px; padding: 3px 10px;
-}
-
-/* ── 페이지 본문 ── */
-.page { padding: 14px 14px 0; display: flex; flex-direction: column; gap: 10px; }
-
-/* ── 섹션 구분선 ── */
-.section-divider {
-  display: flex; align-items: center; gap: 10px;
-  margin: 4px 0 2px;
-}
-.section-divider span {
-  font-size: 11px; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;
-}
-.section-divider::before, .section-divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--border2);
-}
-
-/* ── 카드 ── */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-}
-.card-label {
-  font-size: 11px; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.07em;
-  margin-bottom: 12px;
-}
-
-/* ── 골 선택 ── */
-.grade-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-}
+/* ════════════════════════════════
+   공통 컴포넌트
+════════════════════════════════ */
 .grade-btn {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 11px 6px; gap: 3px;
   border: 1.5px solid var(--border2); border-radius: 12px;
   background: var(--surface2); cursor: pointer;
   font-family: 'Noto Sans KR', sans-serif; transition: all 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
-.grade-btn .g-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.grade-btn .g-name { font-weight: 700; color: var(--text); }
 .grade-btn .g-ply  { font-size: 10px; color: var(--text3); }
+.grade-btn:hover { border-color: var(--accent2); background: var(--accent-light); }
+.grade-btn:hover .g-name { color: var(--accent); }
 .grade-btn.on { background: var(--accent); border-color: var(--accent); }
 .grade-btn.on .g-name { color: #fff; }
 .grade-btn.on .g-ply  { color: rgba(255,255,255,0.55); }
 
-/* 레이어 시각화 바 */
 .layer-visual {
-  display: flex; height: 30px; border-radius: 8px; overflow: hidden;
-  border: 1px solid var(--border); margin: 12px 0 0;
+  display: flex; border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--border);
 }
 .lv-seg {
   flex: 1; display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; border-right: 1px solid var(--border);
+  font-weight: 700; border-right: 1px solid var(--border);
 }
 .lv-seg:last-child { border-right: none; }
-.lv-liner  { background: var(--liner-light); color: var(--liner); }
-.lv-flute  { background: var(--flute-light); color: var(--flute); }
+.lv-liner  { background: var(--liner-light);  color: var(--liner); }
+.lv-flute  { background: var(--flute-light);  color: var(--flute); }
 .lv-center { background: var(--center-light); color: var(--center); }
 
-/* ── 레이어 입력 ── */
-.layer-list { display: flex; flex-direction: column; gap: 8px; }
-
-.layer-item {
-  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-}
-.layer-item-header {
-  padding: 6px 12px; display: flex; align-items: center; gap: 8px;
-}
-.layer-item-header.lh-liner  { background: var(--liner-light); }
-.layer-item-header.lh-flute  { background: var(--flute-light); }
-.layer-item-header.lh-center { background: var(--center-light); }
-.lh-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.lh-name { font-size: 12px; font-weight: 700; }
-.lh-name.c-liner  { color: var(--liner); }
-.lh-name.c-flute  { color: var(--flute); }
-.lh-name.c-center { color: var(--center); }
-
-.layer-item-body {
-  display: grid; grid-template-columns: 1fr 72px 84px; gap: 7px;
-  padding: 10px; background: #fdfcfa;
-  border-top: 1px solid var(--border);
-}
-.input-sub-label {
-  font-size: 9px; color: var(--text3); text-align: center; margin-top: 3px; font-weight: 500;
-}
-
-/* ── inputs ── */
 input[type="text"], input[type="number"] {
-  width: 100%; height: 38px; padding: 0 9px 0 12px;
-  font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+  width: 100%; padding: 0 10px 0 13px;
+  font-family: 'Noto Sans KR', sans-serif;
   background: #fff;
   border: 1.5px solid var(--accent-mid);
   border-left: 3px solid var(--accent);
@@ -152,243 +74,409 @@ input[type="text"], input[type="number"] {
   -webkit-appearance: none; appearance: none;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-input:focus {
-  border-color: var(--accent2);
-  border-left-color: var(--accent2);
-  background: #fff;
-  box-shadow: 0 0 0 3px var(--accent-light);
-}
-input::placeholder { color: var(--text3); font-size: 12px; }
-/* 값이 입력된 경우 */
-input:not(:placeholder-shown) {
-  border-color: var(--border2);
-  border-left-color: var(--accent);
-  background: #fff;
-}
+input:focus { border-color: var(--accent2); border-left-color: var(--accent2); box-shadow: 0 0 0 3px var(--accent-light); }
+input::placeholder { color: var(--text3); }
+input:not(:placeholder-shown) { border-color: var(--border2); border-left-color: var(--accent); }
 
 .input-unit { display: flex; }
 .input-unit input { border-radius: 8px 0 0 8px; border-right: none; flex: 1; min-width: 0; }
 .ubadge {
-  height: 38px; padding: 0 8px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 0 8px 8px 0; font-size: 11px; color: var(--text3);
+  padding: 0 9px;
+  background: var(--accent-light); border: 1.5px solid var(--accent-mid);
+  border-left: none; border-radius: 0 8px 8px 0;
+  font-size: 11px; font-weight: 600; color: var(--accent2);
   display: flex; align-items: center; white-space: nowrap; flex-shrink: 0;
 }
 
-/* ── 원가 박스 ── */
-.pc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
 .pc-box {
   background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 10px; padding: 10px 12px;
+  border-radius: 10px; padding: 10px 13px;
 }
 .pc-box.auto  { background: var(--accent-light); border-color: var(--accent-mid); }
 .pc-box.final { background: var(--accent); border-color: var(--accent); }
-
 .pc-label { font-size: 10px; font-weight: 600; color: var(--text3); margin-bottom: 4px; line-height: 1.4; }
 .pc-box.auto  .pc-label { color: var(--accent2); }
 .pc-box.final .pc-label { color: rgba(255,255,255,0.55); }
-
-.pc-val { font-size: 15px; font-weight: 700; color: var(--text); }
+.pc-val { font-weight: 700; color: var(--text); }
 .pc-box.auto  .pc-val { color: var(--accent); }
 .pc-box.final .pc-val { color: #fff; }
-
 .pc-input { margin-top: 5px; }
-.pc-input input  { height: 36px; font-size: 13px; }
-.pc-input .ubadge { height: 36px; font-size: 10px; }
 
-/* ── 규격 입력 ── */
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-.field label {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 700; color: var(--text2);
-  margin-bottom: 5px;
-}
-.field label::before {
-  content: '';
-  width: 5px; height: 5px; border-radius: 50%;
-  background: var(--accent); flex-shrink: 0;
-}
-
-/* ── 결과 카드 ── */
-.result-card {
-  background: var(--accent); border-radius: 14px; padding: 16px;
-}
-.result-card-title {
-  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45);
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
-}
+.result-card { background: var(--accent); border-radius: 14px; }
+.result-card-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.1em; }
 .result-price-box {
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px;
+  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 12px; text-align: center;
 }
-.result-price-label { font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 5px; }
-.result-price-val   { font-size: 30px; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1; }
-.result-price-unit  { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 400; }
+.result-price-label { font-size: 11px; color: rgba(255,255,255,0.5); }
+.result-price-val   { font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1; }
+.result-price-unit  { color: rgba(255,255,255,0.5); font-weight: 400; }
+.rm { background: rgba(255,255,255,0.09); border-radius: 9px; }
+.rm.hl { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28); }
+.rm .rl { font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.04em; }
+.rm .rv { font-weight: 700; color: #fff; line-height: 1.2; }
+.rm .ru { color: rgba(255,255,255,0.4); font-weight: 400; }
 
-.rg3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-bottom: 7px; }
-.rg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.rm {
-  background: rgba(255,255,255,0.09); border-radius: 9px; padding: 10px;
-}
-.rm .rl { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.4); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
-.rm .rv { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
-.rm .ru { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 400; }
+.req-badge { font-size: 9px; font-weight: 700; margin-left: auto; border-radius: 20px; padding: 2px 7px; }
+.req-badge.need { color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-mid); }
+.req-badge.done { color: #2a7a55; background: #e6f7ee; border: 1px solid #a8ddc0; }
 
-/* 입력 강조 뱃지 */
-.req-badge {
-  margin-left: auto;
-  font-size: 9px; font-weight: 700;
-  color: var(--accent); background: var(--accent-light);
-  border: 1px solid var(--accent-mid);
-  border-radius: 20px; padding: 1px 7px;
+.layer-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 6px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.badge-liner  { background: var(--liner-light);  color: var(--liner); }
+.badge-flute  { background: var(--flute-light);  color: var(--flute); }
+.badge-center { background: var(--center-light); color: var(--center); }
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; }
+.bd-liner  { background: var(--liner); }
+.bd-flute  { background: var(--flute); }
+.bd-center { background: var(--center); }
+
+/* ════════════════════════════════
+   데스크탑 레이아웃
+════════════════════════════════ */
+.layout-desktop { display: none; }
+.layout-mobile  { display: none; }
+
+body.is-desktop .layout-desktop { display: block; }
+body.is-mobile  .layout-mobile  { display: block; }
+
+/* ── 데스크탑 ── */
+.dt-wrap { max-width: 780px; margin: 0 auto; padding: 28px 16px 60px; }
+
+.dt-header {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-bottom: 24px; padding-bottom: 14px;
+  border-bottom: 2px solid var(--accent);
 }
-.req-badge.done {
-  color: #2a7a55; background: #e6f7ee;
-  border-color: #a8ddc0;
+.dt-header h1 { font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -0.03em; }
+.dt-header p  { font-size: 12px; color: var(--text3); }
+
+.dt-step { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
+.dt-step-hdr { display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+.dt-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dt-step-title { font-size: 13px; font-weight: 700; }
+.dt-step-desc  { font-size: 12px; color: var(--text3); margin-left: auto; }
+.dt-step-body  { padding: 18px 20px; }
+
+.dt-grade-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; }
+.dt-grade-grid .grade-btn { padding: 10px 6px; gap: 4px; }
+.dt-grade-grid .grade-btn .g-name { font-size: 14px; }
+
+.dt-layer-visual { height: 36px; margin: 14px 0; }
+.dt-layer-visual .lv-seg { font-size: 10px; }
+
+.dt-layer-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.dt-layer-table th { font-size: 11px; font-weight: 600; color: var(--text3); text-align: left; padding: 6px 8px 8px; border-bottom: 1.5px solid var(--border); }
+.dt-layer-table th:not(:first-child) { text-align: center; }
+.dt-layer-table td { padding: 5px 6px; vertical-align: middle; }
+.dt-layer-table input { height: 32px; font-size: 13px; }
+.dt-layer-table .ubadge { height: 32px; }
+
+.dt-price-grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.dt-price-grid3 .pc-val { font-size: 15px; }
+.dt-price-grid3 .pc-box.final .pc-val { font-size: 17px; }
+.dt-pc-input input  { height: 32px; font-size: 13px; }
+.dt-pc-input .ubadge { height: 32px; }
+
+.dt-spec-grid  { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 10px; }
+.dt-spec-grid2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+.dt-field label { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.03em; }
+.dt-field label::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+.dt-field input { height: 32px; font-size: 13px; }
+.dt-field .ubadge { height: 32px; }
+
+.dt-result { padding: 20px 22px; margin-bottom: 0; }
+.dt-result .result-card-title { margin-bottom: 14px; }
+.dt-rg3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 10px; }
+.dt-rg3b { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 10px; }
+.dt-result .rm { padding: 13px 14px; }
+.dt-result .rm .rl { font-size: 10px; margin-bottom: 5px; }
+.dt-result .rm .rv { font-size: 17px; }
+.dt-result .rm .ru { font-size: 11px; }
+.dt-result .rm.hl .rv { font-size: 20px; }
+
+/* ── 모바일 ── */
+.mb-top-bar {
+  background: var(--accent); padding: 14px 16px 12px;
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 50;
 }
+.mb-top-bar h1 { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -0.02em; flex: 1; }
+.mb-grade-tag { font-size: 12px; font-weight: 700; color: var(--accent); background: rgba(255,255,255,0.9); border-radius: 20px; padding: 3px 10px; }
+
+.mb-page { padding: 12px 13px; display: flex; flex-direction: column; gap: 10px; padding-bottom: calc(20px + var(--safe-bottom)); }
+
+.mb-section-div { display: flex; align-items: center; gap: 10px; margin: 2px 0; }
+.mb-section-div span { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+.mb-section-div::before, .mb-section-div::after { content:''; flex:1; height:1px; background:var(--border2); }
+
+.mb-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+.mb-card-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
+
+.mb-grade-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.mb-grade-grid .grade-btn { padding: 11px 6px; gap: 3px; }
+.mb-grade-grid .grade-btn .g-name { font-size: 15px; }
+
+.mb-layer-visual { height: 30px; margin: 11px 0 0; }
+.mb-layer-visual .lv-seg { font-size: 9px; }
+
+.mb-layer-list { display: flex; flex-direction: column; gap: 8px; }
+.mb-layer-item { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.mb-layer-hdr  { padding: 6px 12px; display: flex; align-items: center; gap: 8px; }
+.mb-layer-hdr.lh-liner  { background: var(--liner-light); }
+.mb-layer-hdr.lh-flute  { background: var(--flute-light); }
+.mb-layer-hdr.lh-center { background: var(--center-light); }
+.mb-lh-dot  { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.mb-lh-name { font-size: 12px; font-weight: 700; }
+.mb-lh-name.c-liner  { color: var(--liner); }
+.mb-lh-name.c-flute  { color: var(--flute); }
+.mb-lh-name.c-center { color: var(--center); }
+.mb-layer-body { display: grid; grid-template-columns: 1fr 72px 84px; gap: 7px; padding: 9px 10px; background: #fdfcfa; border-top: 1px solid var(--border); }
+.mb-input-sub { font-size: 9px; color: var(--text3); text-align: center; margin-top: 3px; font-weight: 500; }
+.mb-layer-body input { height: 36px; font-size: 13px; }
+.mb-layer-body .ubadge { height: 36px; }
+
+.mb-pc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mb-pc-box-wrap { display: flex; flex-direction: column; gap: 8px; }
+.mb-pc-val { font-size: 15px; }
+.mb-pc-box.final .mb-pc-val { font-size: 15px; }
+.mb-pc-input input  { height: 34px; font-size: 13px; }
+.mb-pc-input .ubadge { height: 34px; font-size: 10px; }
+
+.mb-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 9px; }
+.mb-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.mb-field label { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 5px; }
+.mb-field label::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+.mb-field input { height: 38px; font-size: 14px; }
+.mb-field .ubadge { height: 38px; }
+
+.mb-result { padding: 15px; }
+.mb-result .result-card-title { margin-bottom: 10px; }
+.mb-result .result-price-box { padding: 13px; margin-bottom: 10px; }
+.mb-result .result-price-label { margin-bottom: 4px; }
+.mb-result .result-price-val  { font-size: 28px; }
+.mb-result .result-price-unit { font-size: 13px; }
+.mb-rg3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-bottom: 7px; }
+.mb-rg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.mb-result .rm { padding: 10px; }
+.mb-result .rm .rl { font-size: 9px; margin-bottom: 3px; }
+.mb-result .rm .rv { font-size: 14px; }
+.mb-result .rm .ru { font-size: 10px; }
 </style>
 </head>
 <body>
 
-<!-- 헤더 -->
-<div class="top-bar">
-  <h1>골판지 원가 계산기</h1>
-  <span class="grade-tag" id="headerGradeTag">A골</span>
-</div>
+<!-- ════ 데스크탑 레이아웃 ════ -->
+<div class="layout-desktop">
+<div class="dt-wrap">
 
-<div class="page">
-
-  <!-- ① 지종 구성 -->
-  <div class="section-divider"><span>① 지종 구성</span></div>
-
-  <div class="card">
-    <div class="card-label">골 선택</div>
-    <div class="grade-grid" id="gradeBtns">
-      <button class="grade-btn on" data-g="A"><span class="g-name">A골</span><span class="g-ply">3겹</span></button>
-      <button class="grade-btn" data-g="B"><span class="g-name">B골</span><span class="g-ply">3겹</span></button>
-      <button class="grade-btn" data-g="E"><span class="g-name">E골</span><span class="g-ply">3겹</span></button>
-      <button class="grade-btn" data-g="BA"><span class="g-name">BA골</span><span class="g-ply">5겹</span></button>
-      <button class="grade-btn" data-g="BB"><span class="g-name">BB골</span><span class="g-ply">5겹</span></button>
-      <button class="grade-btn" data-g="EB"><span class="g-name">EB골</span><span class="g-ply">5겹</span></button>
-    </div>
-    <div class="layer-visual" id="layerVisual"></div>
+  <div class="dt-header">
+    <h1>골판지 상자 원가 계산기</h1>
+    <p>지종 구성 → 상자 규격 → 원가 자동 계산</p>
   </div>
 
-  <div class="card">
-    <div class="card-label">레이어별 원지 입력</div>
-    <div class="layer-list" id="layerBody"></div>
+  <!-- ① 지종 구성 -->
+  <div class="dt-step">
+    <div class="dt-step-hdr">
+      <div class="dt-step-num">1</div>
+      <span class="dt-step-title">지종 구성</span>
+      <span class="dt-step-desc">골 선택 후 각 레이어 원지 입력</span>
+    </div>
+    <div class="dt-step-body">
+      <div class="dt-grade-grid" id="dt-gradeBtns">
+        <button class="grade-btn on" data-g="A"><span class="g-name">A골</span><span class="g-ply">3겹</span></button>
+        <button class="grade-btn" data-g="B"><span class="g-name">B골</span><span class="g-ply">3겹</span></button>
+        <button class="grade-btn" data-g="E"><span class="g-name">E골</span><span class="g-ply">3겹</span></button>
+        <button class="grade-btn" data-g="BA"><span class="g-name">BA골</span><span class="g-ply">5겹</span></button>
+        <button class="grade-btn" data-g="BB"><span class="g-name">BB골</span><span class="g-ply">5겹</span></button>
+        <button class="grade-btn" data-g="EB"><span class="g-name">EB골</span><span class="g-ply">5겹</span></button>
+      </div>
+      <div class="layer-visual dt-layer-visual" id="dt-layerVisual"></div>
+      <div style="overflow-x:auto">
+        <table class="dt-layer-table">
+          <thead><tr>
+            <th style="width:120px">레이어</th>
+            <th>원지 종류</th>
+            <th style="width:95px;text-align:center">평량 (g/m²)</th>
+            <th style="width:100px;text-align:center">원지가 (원/kg)</th>
+          </tr></thead>
+          <tbody id="dt-layerBody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- ② 원가 구성 -->
-  <div class="section-divider"><span>② 원가 구성</span></div>
-
-  <div class="card">
-    <div class="card-label">원지가</div>
-    <div class="pc-box auto" style="width:100%">
-      <div class="pc-label">원지가 (로스 10% 포함)</div>
-      <div class="pc-val" id="pRaw">—</div>
+  <div class="dt-step">
+    <div class="dt-step-hdr">
+      <div class="dt-step-num">2</div>
+      <span class="dt-step-title">원가 구성</span>
+      <span class="dt-step-desc">가공비 입력 → 원단가·상자㎡단가 자동 계산</span>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-label">가공비</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div class="pc-row">
-        <div class="pc-box">
-          <div class="pc-label">원단 가공비</div>
-          <div class="pc-input">
-            <div class="input-unit">
-              <input type="number" id="processCostSheet" placeholder="0" min="0" inputmode="decimal">
-              <span class="ubadge">원/㎡</span>
-            </div>
-          </div>
-        </div>
-        <div class="pc-box">
-          <div class="pc-label">상자 가공비</div>
-          <div class="pc-input">
-            <div class="input-unit">
-              <input type="number" id="processCostBox" placeholder="0" min="0" inputmode="decimal">
-              <span class="ubadge">원/매</span>
-            </div>
-          </div>
-        </div>
+    <div class="dt-step-body">
+      <div class="dt-price-grid3" style="margin-bottom:10px">
+        <div class="pc-box auto"><div class="pc-label">원지가 (로스 10% 포함)</div><div class="pc-val" id="dt-pRaw">—</div></div>
+        <div class="pc-box"><div class="pc-label">원단 가공비</div><div class="dt-pc-input pc-input"><div class="input-unit"><input type="number" id="dt-processCostSheet" placeholder="0" min="0"><span class="ubadge">원/㎡</span></div></div></div>
+        <div class="pc-box final"><div class="pc-label">원단가 (원지가 + 원단가공비)</div><div class="pc-val" id="dt-pUnit">—</div></div>
       </div>
-      <div class="pc-box auto">
-        <div class="pc-label">총 가공비 (원단 + 상자)</div>
-        <div class="pc-val" id="pTotalProcess">—</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-label">원단가 / 상자㎡단가</div>
-    <div class="pc-row">
-      <div class="pc-box final">
-        <div class="pc-label">원단가<br>(원지가 + 원단가공비)</div>
-        <div class="pc-val" id="pUnit">—</div>
-      </div>
-      <div class="pc-box final">
-        <div class="pc-label">상자㎡단가<br>(원단가 + 상자가공비)</div>
-        <div class="pc-val" id="pBoxSqm">—</div>
+      <div class="dt-price-grid3">
+        <div class="pc-box auto"><div class="pc-label">총 가공비 (원단 + 상자)</div><div class="pc-val" id="dt-pTotalProcess">—</div></div>
+        <div class="pc-box"><div class="pc-label">상자 가공비</div><div class="dt-pc-input pc-input"><div class="input-unit"><input type="number" id="dt-processCostBox" placeholder="0" min="0"><span class="ubadge">원/매</span></div></div></div>
+        <div class="pc-box final"><div class="pc-label">상자㎡단가 (원단가 + 상자가공비)</div><div class="pc-val" id="dt-pBoxSqm">—</div></div>
       </div>
     </div>
   </div>
 
   <!-- ③ 상자 규격 -->
-  <div class="section-divider"><span>③ 상자 규격</span></div>
-
-  <div class="card">
-    <div class="card-label">내치수 (mm)</div>
-    <div class="grid3" style="margin-bottom:10px;">
-      <div class="field"><label>장 (L)</label><input type="number" id="inL" placeholder="400" min="0" inputmode="numeric"></div>
-      <div class="field"><label>폭 (W)</label><input type="number" id="inW" placeholder="300" min="0" inputmode="numeric"></div>
-      <div class="field"><label>고 (H)</label><input type="number" id="inH" placeholder="200" min="0" inputmode="numeric"></div>
+  <div class="dt-step">
+    <div class="dt-step-hdr">
+      <div class="dt-step-num">3</div>
+      <span class="dt-step-title">상자 규격</span>
+      <span class="dt-step-desc">내치수 기준 (mm)</span>
     </div>
-    <div class="grid2" style="margin-bottom:10px;">
-      <div class="field">
-        <label>절수</label>
-        <div class="input-unit"><input type="number" id="inCuts" placeholder="2" min="1" step="1" inputmode="numeric"><span class="ubadge">절</span></div>
+    <div class="dt-step-body">
+      <div class="dt-spec-grid">
+        <div class="dt-field"><label>장 (L)</label><div class="input-unit"><input type="number" id="dt-inL" placeholder="400" min="0"><span class="ubadge">mm</span></div></div>
+        <div class="dt-field"><label>폭 (W)</label><div class="input-unit"><input type="number" id="dt-inW" placeholder="300" min="0"><span class="ubadge">mm</span></div></div>
+        <div class="dt-field"><label>고 (H)</label><div class="input-unit"><input type="number" id="dt-inH" placeholder="200" min="0"><span class="ubadge">mm</span></div></div>
+        <div class="dt-field"><label>절수</label><div class="input-unit"><input type="number" id="dt-inCuts" placeholder="2" min="1" step="1"><span class="ubadge">절</span></div></div>
       </div>
-      <div></div>
-    </div>
-    <div class="grid2">
-      <div class="field">
-        <label>접착 여유 (미미)</label>
-        <div class="input-unit"><input type="number" id="joinA" value="35" min="0" inputmode="numeric"><span class="ubadge">mm</span></div>
-      </div>
-      <div class="field">
-        <label>날개 여유</label>
-        <div class="input-unit"><input type="number" id="wingA" value="4" inputmode="numeric"><span class="ubadge">mm</span></div>
+      <div class="dt-spec-grid2">
+        <div class="dt-field"><label>접착 여유 (미미)</label><div class="input-unit"><input type="number" id="dt-joinA" value="35" min="0"><span class="ubadge">mm</span></div></div>
+        <div class="dt-field"><label>날개 여유</label><div class="input-unit"><input type="number" id="dt-wingA" value="4"><span class="ubadge">mm</span></div></div>
       </div>
     </div>
   </div>
 
   <!-- ④ 계산 결과 -->
-  <div class="section-divider"><span>④ 계산 결과</span></div>
-
-  <div class="result-card">
+  <div class="result-card dt-result">
     <div class="result-card-title">계산 결과</div>
-    <div class="result-price-box">
-      <div class="result-price-label">상자 단가</div>
-      <div class="result-price-val" id="dBoxPrice">—<span class="result-price-unit"> 원</span></div>
+    <div class="dt-rg3">
+      <div class="rm"><p class="rl">원단 장</p><p class="rv" id="dt-rL">—<span class="ru"> mm</span></p></div>
+      <div class="rm"><p class="rl">원단 폭</p><p class="rv" id="dt-rW">—<span class="ru"> mm</span></p></div>
+      <div class="rm"><p class="rl">상자 폭</p><p class="rv" id="dt-rBoxW">—<span class="ru"> mm</span></p></div>
     </div>
-    <div class="rg3">
-      <div class="rm"><p class="rl">원단 장</p><p class="rv" id="rL">—<span class="ru"> mm</span></p></div>
-      <div class="rm"><p class="rl">원단 폭</p><p class="rv" id="rW">—<span class="ru"> mm</span></p></div>
-      <div class="rm"><p class="rl">상자 폭</p><p class="rv" id="rBoxW">—<span class="ru"> mm</span></p></div>
-    </div>
-    <div class="rg2">
-      <div class="rm"><p class="rl">절수</p><p class="rv" id="rCuts">—<span class="ru"> 절</span></p></div>
-      <div class="rm"><p class="rl">상자 면적</p><p class="rv" id="dArea">—<span class="ru"> ㎡</span></p></div>
+    <div class="dt-rg3b">
+      <div class="rm"><p class="rl">절수</p><p class="rv" id="dt-rCuts">—<span class="ru"> 절</span></p></div>
+      <div class="rm"><p class="rl">상자 면적</p><p class="rv" id="dt-dArea">—<span class="ru"> ㎡</span></p></div>
+      <div class="rm hl"><p class="rl">상자 단가</p><p class="rv" id="dt-dBoxPrice">—<span class="ru"> 원</span></p></div>
     </div>
   </div>
 
-</div><!-- /page -->
+</div>
+</div>
+
+<!-- ════ 모바일 레이아웃 ════ -->
+<div class="layout-mobile">
+
+  <div class="mb-top-bar">
+    <h1>골판지 원가 계산기</h1>
+    <span class="mb-grade-tag" id="mb-gradeTag">A골</span>
+  </div>
+
+  <div class="mb-page">
+
+    <div class="mb-section-div"><span>① 지종 구성</span></div>
+
+    <div class="mb-card">
+      <div class="mb-card-label">골 선택</div>
+      <div class="mb-grade-grid" id="mb-gradeBtns">
+        <button class="grade-btn on" data-g="A"><span class="g-name">A골</span><span class="g-ply">3겹</span></button>
+        <button class="grade-btn" data-g="B"><span class="g-name">B골</span><span class="g-ply">3겹</span></button>
+        <button class="grade-btn" data-g="E"><span class="g-name">E골</span><span class="g-ply">3겹</span></button>
+        <button class="grade-btn" data-g="BA"><span class="g-name">BA골</span><span class="g-ply">5겹</span></button>
+        <button class="grade-btn" data-g="BB"><span class="g-name">BB골</span><span class="g-ply">5겹</span></button>
+        <button class="grade-btn" data-g="EB"><span class="g-name">EB골</span><span class="g-ply">5겹</span></button>
+      </div>
+      <div class="layer-visual mb-layer-visual" id="mb-layerVisual"></div>
+    </div>
+
+    <div class="mb-card">
+      <div class="mb-card-label">레이어별 원지 입력</div>
+      <div class="mb-layer-list" id="mb-layerBody"></div>
+    </div>
+
+    <div class="mb-section-div"><span>② 원가 구성</span></div>
+
+    <div class="mb-card">
+      <div class="mb-card-label">원지가</div>
+      <div class="pc-box auto" style="width:100%"><div class="pc-label">원지가 (로스 10% 포함)</div><div class="pc-val mb-pc-val" id="mb-pRaw">—</div></div>
+    </div>
+
+    <div class="mb-card">
+      <div class="mb-card-label">가공비</div>
+      <div class="mb-pc-box-wrap">
+        <div class="mb-pc-row">
+          <div class="pc-box"><div class="pc-label">원단 가공비</div><div class="mb-pc-input pc-input"><div class="input-unit"><input type="number" id="mb-processCostSheet" placeholder="0" min="0" inputmode="decimal"><span class="ubadge">원/㎡</span></div></div></div>
+          <div class="pc-box"><div class="pc-label">상자 가공비</div><div class="mb-pc-input pc-input"><div class="input-unit"><input type="number" id="mb-processCostBox" placeholder="0" min="0" inputmode="decimal"><span class="ubadge">원/매</span></div></div></div>
+        </div>
+        <div class="pc-box auto"><div class="pc-label">총 가공비 (원단 + 상자)</div><div class="pc-val mb-pc-val" id="mb-pTotalProcess">—</div></div>
+      </div>
+    </div>
+
+    <div class="mb-card">
+      <div class="mb-card-label">원단가 / 상자㎡단가</div>
+      <div class="mb-pc-row">
+        <div class="pc-box final"><div class="pc-label">원단가<br>(원지가+원단가공비)</div><div class="pc-val mb-pc-val" id="mb-pUnit">—</div></div>
+        <div class="pc-box final"><div class="pc-label">상자㎡단가<br>(원단가+상자가공비)</div><div class="pc-val mb-pc-val" id="mb-pBoxSqm">—</div></div>
+      </div>
+    </div>
+
+    <div class="mb-section-div"><span>③ 상자 규격</span></div>
+
+    <div class="mb-card">
+      <div class="mb-card-label">내치수 (mm)</div>
+      <div class="mb-grid3">
+        <div class="mb-field"><label>장 (L)</label><input type="number" id="mb-inL" placeholder="400" min="0" inputmode="numeric"></div>
+        <div class="mb-field"><label>폭 (W)</label><input type="number" id="mb-inW" placeholder="300" min="0" inputmode="numeric"></div>
+        <div class="mb-field"><label>고 (H)</label><input type="number" id="mb-inH" placeholder="200" min="0" inputmode="numeric"></div>
+      </div>
+      <div class="mb-grid2" style="margin-bottom:9px">
+        <div class="mb-field"><label>절수</label><div class="input-unit"><input type="number" id="mb-inCuts" placeholder="2" min="1" step="1" inputmode="numeric"><span class="ubadge">절</span></div></div>
+        <div></div>
+      </div>
+      <div class="mb-grid2">
+        <div class="mb-field"><label>접착 여유 (미미)</label><div class="input-unit"><input type="number" id="mb-joinA" value="35" min="0" inputmode="numeric"><span class="ubadge">mm</span></div></div>
+        <div class="mb-field"><label>날개 여유</label><div class="input-unit"><input type="number" id="mb-wingA" value="4" inputmode="numeric"><span class="ubadge">mm</span></div></div>
+      </div>
+    </div>
+
+    <div class="mb-section-div"><span>④ 계산 결과</span></div>
+
+    <div class="result-card mb-result">
+      <div class="result-card-title">계산 결과</div>
+      <div class="result-price-box"><div class="result-price-label">상자 단가</div><div class="result-price-val" id="mb-dBoxPrice">—<span class="result-price-unit"> 원</span></div></div>
+      <div class="mb-rg3">
+        <div class="rm"><p class="rl">원단 장</p><p class="rv" id="mb-rL">—<span class="ru"> mm</span></p></div>
+        <div class="rm"><p class="rl">원단 폭</p><p class="rv" id="mb-rW">—<span class="ru"> mm</span></p></div>
+        <div class="rm"><p class="rl">상자 폭</p><p class="rv" id="mb-rBoxW">—<span class="ru"> mm</span></p></div>
+      </div>
+      <div class="mb-rg2">
+        <div class="rm"><p class="rl">절수</p><p class="rv" id="mb-rCuts">—<span class="ru"> 절</span></p></div>
+        <div class="rm"><p class="rl">상자 면적</p><p class="rv" id="mb-dArea">—<span class="ru"> ㎡</span></p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
+/* ── 기기 감지 ── */
+function isMobile() {
+  return window.innerWidth < 768 || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+function applyLayout() {
+  if (isMobile()) {
+    document.body.classList.add('is-mobile');
+    document.body.classList.remove('is-desktop');
+  } else {
+    document.body.classList.add('is-desktop');
+    document.body.classList.remove('is-mobile');
+  }
+}
+applyLayout();
+window.addEventListener('resize', function() { applyLayout(); });
+
+/* ── 공통 데이터 ── */
 var GRADES = {
   A:  {layers:[{n:'표면지',t:'liner'},{n:'A골 심지',t:'flute',f:1.60},{n:'이면지',t:'liner'}],thick:5,ply:3},
   B:  {layers:[{n:'표면지',t:'liner'},{n:'B골 심지',t:'flute',f:1.40},{n:'이면지',t:'liner'}],thick:3,ply:3},
@@ -397,166 +485,206 @@ var GRADES = {
   BB: {layers:[{n:'표면지',t:'liner'},{n:'B골 심지',t:'flute',f:1.40},{n:'중심지',t:'liner'},{n:'B골 심지',t:'flute',f:1.40},{n:'이면지',t:'liner'}],thick:6,ply:5},
   EB: {layers:[{n:'표면지',t:'liner'},{n:'E골 심지',t:'flute',f:1.30},{n:'중심지',t:'liner'},{n:'B골 심지',t:'flute',f:1.40},{n:'이면지',t:'liner'}],thick:4.5,ply:5}
 };
+var dtGrade = 'A', mbGrade = 'A';
 
-var selGrade = 'A';
+function fmt(n){ return Math.round(n).toLocaleString('ko-KR'); }
+function roundWidth(raw){ var v=raw+20; if(v<=1350)return 1350; if(v<=1800)return Math.ceil(v/50)*50; return Math.ceil(v/100)*100; }
+function setEl(id,html){ var el=document.getElementById(id); if(el) el.innerHTML=html; }
+function setTxt(id,txt){ var el=document.getElementById(id); if(el) el.textContent=txt; }
 
-/* 골 선택 */
-document.getElementById('gradeBtns').addEventListener('click', function(e) {
-  var btn = e.target.closest('.grade-btn');
-  if (!btn) return;
-  document.querySelectorAll('.grade-btn').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
-  selGrade = btn.dataset.g;
-  document.getElementById('headerGradeTag').textContent = selGrade + '골';
-  var wingDef = {A:4,B:4,E:4,BA:6,BB:6,EB:6};
-  document.getElementById('wingA').value = wingDef[selGrade];
-  buildVisual();
-  buildLayers();
-});
-
-/* 레이어 시각화 */
-function buildVisual() {
-  var g = GRADES[selGrade];
-  var vis = document.getElementById('layerVisual');
+/* ── 시각화 ── */
+function buildVisual(containerId, grade) {
+  var g = GRADES[grade];
+  var vis = document.getElementById(containerId);
+  if (!vis) return;
   vis.innerHTML = '';
   g.layers.forEach(function(layer) {
     var seg = document.createElement('div');
     seg.className = 'lv-seg';
-    if (layer.t === 'flute') {
-      seg.classList.add('lv-flute');
-      seg.textContent = layer.n.replace(' 심지','');
-    } else if (layer.n === '중심지') {
-      seg.classList.add('lv-center');
-      seg.textContent = '중심지';
-    } else {
-      seg.classList.add('lv-liner');
-      seg.textContent = layer.n;
-    }
+    if (layer.t==='flute') { seg.classList.add('lv-flute'); seg.textContent = layer.n.replace(' 심지',''); }
+    else if (layer.n==='중심지') { seg.classList.add('lv-center'); seg.textContent='중심지'; }
+    else { seg.classList.add('lv-liner'); seg.textContent=layer.n; }
     vis.appendChild(seg);
   });
 }
 
-/* 레이어 입력 */
-function buildLayers() {
-  var g = GRADES[selGrade];
-  var list = document.getElementById('layerBody');
+/* ── 데스크탑 레이어 빌드 ── */
+function dtBuildLayers() {
+  var g = GRADES[dtGrade];
+  var tbody = document.getElementById('dt-layerBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  g.layers.forEach(function(layer, i) {
+    var isFlute=layer.t==='flute', isCenter=layer.n==='중심지';
+    var bc = isFlute?'badge-flute':(isCenter?'badge-center':'badge-liner');
+    var dc = isFlute?'bd-flute':(isCenter?'bd-center':'bd-liner');
+    var ph = isFlute?'S120':(isCenter?'S120':'KY180');
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><span class="layer-badge '+bc+'"><span class="badge-dot '+dc+'"></span>'+layer.n+'</span></td>' +
+      '<td><input type="text" data-dt-name="'+i+'" placeholder="'+ph+'"></td>' +
+      '<td><input type="number" data-dt-grm="'+i+'" placeholder="180" min="0" step="any" style="text-align:center"></td>' +
+      '<td><input type="number" data-dt-price="'+i+'" placeholder="원/kg" min="0" step="any" style="text-align:center"></td>';
+    tbody.appendChild(tr);
+  });
+  tbody.addEventListener('input', dtCalc);
+  dtCalc();
+}
+
+/* ── 모바일 레이어 빌드 ── */
+function mbBuildLayers() {
+  var g = GRADES[mbGrade];
+  var list = document.getElementById('mb-layerBody');
+  if (!list) return;
   list.innerHTML = '';
   g.layers.forEach(function(layer, i) {
-    var isFlute  = layer.t === 'flute';
-    var isCenter = layer.n === '중심지';
-    var hdrClass  = isFlute ? 'lh-flute'  : (isCenter ? 'lh-center'  : 'lh-liner');
-    var nameClass = isFlute ? 'c-flute'   : (isCenter ? 'c-center'   : 'c-liner');
-    var dotBg     = isFlute ? 'var(--flute)' : (isCenter ? 'var(--center)' : 'var(--liner)');
-    var ph = isFlute ? 'S120' : (isCenter ? 'S120' : 'KY180');
+    var isFlute=layer.t==='flute', isCenter=layer.n==='중심지';
+    var hc = isFlute?'lh-flute':(isCenter?'lh-center':'lh-liner');
+    var nc = isFlute?'c-flute':(isCenter?'c-center':'c-liner');
+    var db = isFlute?'var(--flute)':(isCenter?'var(--center)':'var(--liner)');
+    var ph = isFlute?'S120':(isCenter?'S120':'KY180');
     var item = document.createElement('div');
-    item.className = 'layer-item';
+    item.className = 'mb-layer-item';
     item.innerHTML =
-      '<div class="layer-item-header '+hdrClass+'" id="lhdr-'+i+'">' +
-        '<div class="lh-dot" style="background:'+dotBg+'"></div>' +
-        '<span class="lh-name '+nameClass+'">'+layer.n+'</span>' +
-        '<span class="req-badge" id="lbadge-'+i+'">입력 필요</span>' +
+      '<div class="mb-layer-hdr '+hc+'" id="mb-lhdr-'+i+'">' +
+        '<div class="mb-lh-dot" style="background:'+db+'"></div>' +
+        '<span class="mb-lh-name '+nc+'">'+layer.n+'</span>' +
+        '<span class="req-badge need" id="mb-lbadge-'+i+'">입력 필요</span>' +
       '</div>' +
-      '<div class="layer-item-body">' +
-        '<div><input type="text" data-name="'+i+'" placeholder="'+ph+'"><div class="input-sub-label">원지 종류</div></div>' +
-        '<div><input type="number" data-grm="'+i+'" placeholder="180" min="0" step="any" inputmode="decimal" style="text-align:center"><div class="input-sub-label">평량 g/m²</div></div>' +
-        '<div><input type="number" data-price="'+i+'" placeholder="원/kg" min="0" step="any" inputmode="decimal" style="text-align:center"><div class="input-sub-label">원지가 원/kg</div></div>' +
+      '<div class="mb-layer-body">' +
+        '<div><input type="text" data-mb-name="'+i+'" placeholder="'+ph+'"><div class="mb-input-sub">원지 종류</div></div>' +
+        '<div><input type="number" data-mb-grm="'+i+'" placeholder="180" min="0" step="any" inputmode="decimal" style="text-align:center"><div class="mb-input-sub">평량 g/m²</div></div>' +
+        '<div><input type="number" data-mb-price="'+i+'" placeholder="원/kg" min="0" step="any" inputmode="decimal" style="text-align:center"><div class="mb-input-sub">원지가 원/kg</div></div>' +
       '</div>';
     list.appendChild(item);
   });
-  list.addEventListener('input', calc);
-  calc();
+  list.addEventListener('input', mbCalc);
+  mbCalc();
 }
 
-/* 이벤트 리스너 */
-['inL','inW','inH','inCuts','joinA','wingA','processCostSheet','processCostBox'].forEach(function(id){
-  document.getElementById(id).addEventListener('input', calc);
+/* ── 데스크탑 골 선택 ── */
+document.getElementById('dt-gradeBtns').addEventListener('click', function(e) {
+  var btn = e.target.closest('.grade-btn'); if (!btn) return;
+  document.querySelectorAll('#dt-gradeBtns .grade-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  dtGrade = btn.dataset.g;
+  var wd = {A:4,B:4,E:4,BA:6,BB:6,EB:6};
+  document.getElementById('dt-wingA').value = wd[dtGrade];
+  buildVisual('dt-layerVisual', dtGrade);
+  dtBuildLayers();
 });
 
-function fmt(n){ return Math.round(n).toLocaleString('ko-KR'); }
+/* ── 모바일 골 선택 ── */
+document.getElementById('mb-gradeBtns').addEventListener('click', function(e) {
+  var btn = e.target.closest('.grade-btn'); if (!btn) return;
+  document.querySelectorAll('#mb-gradeBtns .grade-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  mbGrade = btn.dataset.g;
+  var wd = {A:4,B:4,E:4,BA:6,BB:6,EB:6};
+  document.getElementById('mb-wingA').value = wd[mbGrade];
+  document.getElementById('mb-gradeTag').textContent = mbGrade+'골';
+  buildVisual('mb-layerVisual', mbGrade);
+  mbBuildLayers();
+});
 
-function roundWidth(raw) {
-  var v = raw + 20;
-  if (v <= 1350) return 1350;
-  if (v <= 1800) return Math.ceil(v/50)*50;
-  return Math.ceil(v/100)*100;
-}
+/* ── 이벤트 리스너 ── */
+['dt-inL','dt-inW','dt-inH','dt-inCuts','dt-joinA','dt-wingA','dt-processCostSheet','dt-processCostBox'].forEach(function(id){
+  var el=document.getElementById(id); if(el) el.addEventListener('input', dtCalc);
+});
+['mb-inL','mb-inW','mb-inH','mb-inCuts','mb-joinA','mb-wingA','mb-processCostSheet','mb-processCostBox'].forEach(function(id){
+  var el=document.getElementById(id); if(el) el.addEventListener('input', mbCalc);
+});
 
-function setEl(id, html) { var el=document.getElementById(id); if(el) el.innerHTML=html; }
-function setTxt(id, txt) { var el=document.getElementById(id); if(el) el.textContent=txt; }
-
-function calc() {
-  var g = GRADES[selGrade];
+/* ── 공통 계산 로직 ── */
+function runCalc(prefix, grade) {
+  var g = GRADES[grade];
   var rawPerSqm = 0;
+  var attrGrm   = 'data-'+prefix+'-grm';
+  var attrPrice = 'data-'+prefix+'-price';
+
   for (var i=0; i<g.layers.length; i++) {
     var layer = g.layers[i];
-    var ge = document.querySelector('[data-grm="'+i+'"]');
-    var pe = document.querySelector('[data-price="'+i+'"]');
-    var grm     = parseFloat(ge ? ge.value : '') || 0;
-    var priceKg = parseFloat(pe ? pe.value : '') || 0;
+    var ge = document.querySelector('['+attrGrm+'="'+i+'"]');
+    var pe = document.querySelector('['+attrPrice+'="'+i+'"]');
+    var grm     = parseFloat(ge?ge.value:'') || 0;
+    var priceKg = parseFloat(pe?pe.value:'') || 0;
     if (grm>0 && priceKg>0) {
       var factor = layer.t==='flute' ? (layer.f||1.35) : 1;
       rawPerSqm += (grm/1000)*priceKg*factor;
     }
-    /* 뱃지 상태 업데이트 */
-    var badge = document.getElementById('lbadge-'+i);
-    var ne = document.querySelector('[data-name="'+i+'"]');
-    var nameFilled = ne && ne.value.trim();
-    if (badge) {
-      var filled = grm>0 && priceKg>0;
-      badge.textContent = filled ? '입력 완료' : '입력 필요';
-      badge.className = 'req-badge' + (filled ? ' done' : '');
+    /* 모바일 뱃지 */
+    if (prefix==='mb') {
+      var badge = document.getElementById('mb-lbadge-'+i);
+      if (badge) { var ok=grm>0&&priceKg>0; badge.textContent=ok?'입력 완료':'입력 필요'; badge.className='req-badge '+(ok?'done':'need'); }
     }
   }
 
-  var rawWithLoss      = rawPerSqm > 0 ? rawPerSqm * 1.1 : 0;
-  var processCostSheet = parseFloat(document.getElementById('processCostSheet').value) || 0;
-  var processCostBox   = parseFloat(document.getElementById('processCostBox').value)   || 0;
-  var totalProcess     = processCostSheet + processCostBox;
-  var unitCostPerSqm   = rawWithLoss + processCostSheet;
-  var boxSqmPrice      = unitCostPerSqm + processCostBox;
+  var rawWithLoss = rawPerSqm>0 ? rawPerSqm*1.1 : 0;
+  var pcs = parseFloat((document.getElementById(prefix+'-processCostSheet')||{}).value) || 0;
+  var pcb = parseFloat((document.getElementById(prefix+'-processCostBox')||{}).value)   || 0;
+  var total = pcs+pcb, unit=rawWithLoss+pcs, boxSqm=unit+pcb;
+  var p = prefix+'-';
 
-  setTxt('pRaw',         rawWithLoss>0    ? fmt(Math.round(rawWithLoss))    +' 원/㎡' : '—');
-  setTxt('pUnit',         unitCostPerSqm>0 ? fmt(Math.round(unitCostPerSqm)) +' 원/㎡' : '—');
-  setTxt('pTotalProcess', totalProcess>0   ? fmt(Math.round(totalProcess))   +' 원'   : '—');
-  setTxt('pBoxSqm',       boxSqmPrice>0    ? fmt(Math.round(boxSqmPrice))    +' 원/㎡' : '—');
+  setTxt(p+'pRaw',          rawWithLoss>0 ? fmt(Math.round(rawWithLoss)) +' 원/㎡' : '—');
+  setTxt(p+'pUnit',          unit>0        ? fmt(Math.round(unit))        +' 원/㎡' : '—');
+  setTxt(p+'pTotalProcess',  total>0       ? fmt(Math.round(total))       +' 원'   : '—');
+  setTxt(p+'pBoxSqm',        boxSqm>0      ? fmt(Math.round(boxSqm))      +' 원/㎡' : '—');
 
-  var L    = parseFloat(document.getElementById('inL').value)   || 0;
-  var W    = parseFloat(document.getElementById('inW').value)   || 0;
-  var H    = parseFloat(document.getElementById('inH').value)   || 0;
-  var cuts = parseInt(document.getElementById('inCuts').value)  || 0;
-  var join = parseFloat(document.getElementById('joinA').value) || 0;
-  var wing = parseFloat(document.getElementById('wingA').value) || 0;
+  var L    = parseFloat((document.getElementById(p+'inL')||{}).value)    || 0;
+  var W    = parseFloat((document.getElementById(p+'inW')||{}).value)    || 0;
+  var H    = parseFloat((document.getElementById(p+'inH')||{}).value)    || 0;
+  var cuts = parseInt((document.getElementById(p+'inCuts')||{}).value)   || 0;
+  var join = parseFloat((document.getElementById(p+'joinA')||{}).value)  || 0;
+  var wing = parseFloat((document.getElementById(p+'wingA')||{}).value)  || 0;
 
+  var blank = '—';
   if (!L||!W||!H||!cuts) {
-    setEl('rL',       '—<span class="ru"> mm</span>');
-    setEl('rW',       '—<span class="ru"> mm</span>');
-    setEl('rBoxW',    '—<span class="ru"> mm</span>');
-    setEl('rCuts',    '—<span class="ru"> 절</span>');
-    setEl('dArea',    '—<span class="ru"> ㎡</span>');
-    setEl('dBoxPrice','—<span class="result-price-unit"> 원</span>');
+    if (prefix==='mb') {
+      setEl(p+'rL',       blank+'<span class="ru"> mm</span>');
+      setEl(p+'rW',       blank+'<span class="ru"> mm</span>');
+      setEl(p+'rBoxW',    blank+'<span class="ru"> mm</span>');
+      setEl(p+'rCuts',    blank+'<span class="ru"> 절</span>');
+      setEl(p+'dArea',    blank+'<span class="ru"> ㎡</span>');
+      setEl(p+'dBoxPrice',blank+'<span class="result-price-unit"> 원</span>');
+    } else {
+      setEl(p+'rL',       blank+'<span class="ru"> mm</span>');
+      setEl(p+'rW',       blank+'<span class="ru"> mm</span>');
+      setEl(p+'rBoxW',    blank+'<span class="ru"> mm</span>');
+      setEl(p+'rCuts',    blank+'<span class="ru"> 절</span>');
+      setEl(p+'dArea',    blank+'<span class="ru"> ㎡</span>');
+      setEl(p+'dBoxPrice',blank+'<span class="ru"> 원</span>');
+    }
     return;
   }
 
-  var sheetL   = (L+W)*2 + join;
+  var sheetL   = (L+W)*2+join;
   var boxWidth  = W+H+wing;
   var sheetW   = roundWidth(boxWidth*cuts);
   var boxArea  = (sheetL/1000)*(sheetW/1000)/cuts;
-  var boxPrice = boxSqmPrice>0 ? boxArea*boxSqmPrice : null;
+  var boxPrice = boxSqm>0 ? boxArea*boxSqm : null;
+  var bpStr    = boxPrice!==null ? fmt(boxPrice) : blank;
 
-  setEl('rL',    fmt(sheetL)   +'<span class="ru"> mm</span>');
-  setEl('rW',    fmt(sheetW)   +'<span class="ru"> mm</span>');
-  setEl('rBoxW', fmt(boxWidth) +'<span class="ru"> mm</span>');
-  setEl('rCuts', cuts          +'<span class="ru"> 절</span>');
-  setEl('dArea', boxArea.toFixed(3)+'<span class="ru"> ㎡</span>');
-  setEl('dBoxPrice', boxPrice!==null
-    ? fmt(boxPrice)+'<span class="result-price-unit"> 원</span>'
-    : '—<span class="result-price-unit"> 원</span>');
+  setEl(p+'rL',    fmt(sheetL)  +'<span class="ru"> mm</span>');
+  setEl(p+'rW',    fmt(sheetW)  +'<span class="ru"> mm</span>');
+  setEl(p+'rBoxW', fmt(boxWidth)+'<span class="ru"> mm</span>');
+  setEl(p+'rCuts', cuts         +'<span class="ru"> 절</span>');
+  setEl(p+'dArea', boxArea.toFixed(3)+'<span class="ru"> ㎡</span>');
+
+  if (prefix==='mb') {
+    setEl(p+'dBoxPrice', bpStr+'<span class="result-price-unit"> 원</span>');
+  } else {
+    setEl(p+'dBoxPrice', bpStr+'<span class="ru"> 원</span>');
+  }
 }
 
-/* 초기화 */
-document.getElementById('wingA').value = 4;
-buildVisual();
-buildLayers();
+function dtCalc(){ runCalc('dt', dtGrade); }
+function mbCalc(){ runCalc('mb', mbGrade); }
+
+/* ── 초기화 ── */
+buildVisual('dt-layerVisual', dtGrade);
+dtBuildLayers();
+buildVisual('mb-layerVisual', mbGrade);
+mbBuildLayers();
 </script>
 </body>
 </html>
