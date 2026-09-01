@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>원지가격 관리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f2f1ee;
+  --surface: #fff;
+  --surface2: #f7f6f4;
+  --border: #e6e3de;
+  --border2: #ccc8c0;
+  --text: #1c1a18;
+  --text2: #6a6560;
+  --text3: #aaa69e;
+  --accent: #1d4035;
+  --accent2: #2d5c4e;
+  --accent-light: #e8f2ee;
+  --accent-mid: #c0d9d0;
+  --danger: #b93232;
+  --danger-light: #fdf0f0;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 40px; }
+
+/* 헤더 */
+.top-bar {
+  background: var(--accent);
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 50;
+}
+.back-btn {
+  background: rgba(255,255,255,0.15); border: none; border-radius: 8px;
+  color: #fff; font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 6px 12px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.top-bar h1 { font-size: 16px; font-weight: 700; color: #fff; flex: 1; }
+.count-badge { font-size: 12px; font-weight: 700; color: var(--accent); background: rgba(255,255,255,0.9); border-radius: 20px; padding: 3px 10px; }
+
+/* 페이지 */
+.page { max-width: 600px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+/* 섹션 */
+.sec-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+
+/* 입력 폼 */
+.form-grid { display: grid; grid-template-columns: 1fr 80px 100px; gap: 8px; align-items: end; margin-bottom: 10px; }
+.form-grid-type { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+
+.field label { display: block; font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 5px; }
+input[type="text"], input[type="number"], select {
+  width: 100%; height: 38px; padding: 0 10px;
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); outline: none;
+  -webkit-appearance: none; appearance: none;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus { border-color: var(--accent2); background: #fff; }
+input::placeholder { color: var(--text3); }
+
+.input-unit { display: flex; }
+.input-unit input { border-radius: 8px 0 0 8px; border-right: none; flex: 1; }
+.ubadge {
+  height: 38px; padding: 0 9px;
+  background: var(--accent-light); border: 1.5px solid var(--accent-mid);
+  border-left: none; border-radius: 0 8px 8px 0;
+  font-size: 11px; font-weight: 600; color: var(--accent2);
+  display: flex; align-items: center; white-space: nowrap;
+}
+
+.type-btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.type-btn {
+  padding: 5px 12px; border: 1.5px solid var(--border2); border-radius: 20px;
+  background: var(--surface2); font-size: 12px; font-weight: 600; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; color: var(--text2); transition: all 0.15s;
+}
+.type-btn.on-liner  { background: #eef2f8; border-color: #1a3358; color: #1a3358; }
+.type-btn.on-flute  { background: #fdf0ec; border-color: #7a3520; color: #7a3520; }
+.type-btn.on-center { background: #faf3e8; border-color: #5c3d10; color: #5c3d10; }
+
+.add-btn {
+  width: 100%; height: 42px;
+  background: var(--accent); color: #fff; border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: background 0.15s;
+}
+.add-btn:hover { background: var(--accent2); }
+.add-btn:active { transform: scale(0.98); }
+
+/* 목록 */
+.list-header {
+  display: grid; grid-template-columns: 70px 1fr 72px 90px 60px;
+  gap: 6px; padding: 6px 10px;
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+.price-item {
+  display: grid; grid-template-columns: 70px 1fr 72px 90px 60px;
+  gap: 6px; align-items: center;
+  padding: 10px 10px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.price-item:last-child { border-bottom: none; }
+.price-item:hover { background: var(--surface2); }
+
+.pi-type { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+.pi-liner  { background: #eef2f8; color: #1a3358; }
+.pi-flute  { background: #fdf0ec; color: #7a3520; }
+.pi-center { background: #faf3e8; color: #5c3d10; }
+
+.pi-name  { font-size: 13px; font-weight: 700; color: var(--text); }
+.pi-grm   { font-size: 13px; color: var(--text2); text-align: center; }
+.pi-price { font-size: 13px; font-weight: 700; color: var(--accent); text-align: right; }
+.pi-price span { font-size: 10px; font-weight: 400; color: var(--text3); }
+
+.del-btn {
+  background: none; border: 1px solid var(--border2);
+  border-radius: 6px; color: var(--text3); font-size: 11px;
+  padding: 4px 8px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.15s;
+}
+.del-btn:hover { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+
+.empty-msg { text-align: center; padding: 30px; color: var(--text3); font-size: 13px; }
+
+/* 정렬 탭 */
+.sort-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.sort-tab {
+  padding: 4px 12px; border: 1px solid var(--border2); border-radius: 20px;
+  background: var(--surface2); font-size: 11px; font-weight: 600;
+  cursor: pointer; font-family: 'Noto Sans KR', sans-serif; color: var(--text2);
+}
+.sort-tab.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* 초기화 버튼 */
+.reset-btn {
+  background: none; border: 1px solid var(--border2);
+  border-radius: 8px; color: var(--text3); font-size: 12px; font-weight: 600;
+  padding: 6px 12px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+}
+.reset-btn:hover { border-color: var(--danger); color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <button class="back-btn" onclick="goBack()">← 계산기</button>
+  <h1>원지가격 관리</h1>
+  <span class="count-badge" id="countBadge">0종</span>
+</div>
+
+<div class="page">
+
+  <!-- 추가 폼 -->
+  <div class="card">
+    <div class="sec-label">원지 추가</div>
+
+    <div class="field" style="margin-bottom:10px;">
+      <label>원지 구분</label>
+      <div class="type-btn-group" id="typeBtns">
+        <button class="type-btn on-liner" data-t="liner">라이너지 (표면·이면)</button>
+        <button class="type-btn" data-t="flute">골심지</button>
+        <button class="type-btn" data-t="center">중심지</button>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>원지명</label>
+        <input type="text" id="fName" placeholder="예) KY180">
+      </div>
+      <div class="field">
+        <label>평량</label>
+        <div class="input-unit">
+          <input type="number" id="fGrm" placeholder="180" min="0">
+          <span class="ubadge">g</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>원지가</label>
+        <div class="input-unit">
+          <input type="number" id="fPrice" placeholder="1200" min="0">
+          <span class="ubadge">원/kg</span>
+        </div>
+      </div>
+    </div>
+    <button class="add-btn" onclick="addItem()">+ 추가</button>
+  </div>
+
+  <!-- 목록 -->
+  <div class="card" style="padding:12px 0 0;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 10px;">
+      <div class="sort-tabs" id="sortTabs">
+        <button class="sort-tab on" data-s="all">전체</button>
+        <button class="sort-tab" data-s="liner">라이너지</button>
+        <button class="sort-tab" data-s="flute">골심지</button>
+        <button class="sort-tab" data-s="center">중심지</button>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">전체 삭제</button>
+    </div>
+
+    <div class="list-header">
+      <span>구분</span><span>원지명</span><span style="text-align:center">평량</span><span style="text-align:right">원지가</span><span></span>
+    </div>
+    <div id="priceList"></div>
+  </div>
+
+</div>
+
+<script>
+var STORAGE_KEY = 'paperPrices_v1';
+var selType = 'liner';
+var sortFilter = 'all';
+
+/* localStorage */
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { return []; }
+}
+function save(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+/* 뒤로가기 */
+function goBack() {
+  if (document.referrer && document.referrer.indexOf(location.host) > -1) {
+    history.back();
+  } else {
+    location.href = 'index.html';
+  }
+}
+
+/* 타입 버튼 */
+document.getElementById('typeBtns').addEventListener('click', function(e) {
+  var btn = e.target.closest('.type-btn');
+  if (!btn) return;
+  selType = btn.dataset.t;
+  document.querySelectorAll('.type-btn').forEach(function(b) { b.className = 'type-btn'; });
+  btn.classList.add('on-' + selType);
+});
+
+/* 정렬 탭 */
+document.getElementById('sortTabs').addEventListener('click', function(e) {
+  var btn = e.target.closest('.sort-tab');
+  if (!btn) return;
+  sortFilter = btn.dataset.s;
+  document.querySelectorAll('.sort-tab').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  renderList();
+});
+
+/* 추가 */
+function addItem() {
+  var name  = document.getElementById('fName').value.trim();
+  var grm   = parseFloat(document.getElementById('fGrm').value) || 0;
+  var price = parseFloat(document.getElementById('fPrice').value) || 0;
+  if (!name) { alert('원지명을 입력해 주세요.'); return; }
+  if (!grm)  { alert('평량을 입력해 주세요.'); return; }
+  if (!price){ alert('원지가를 입력해 주세요.'); return; }
+
+  var list = load();
+  /* 같은 이름+타입 덮어쓰기 */
+  var idx = list.findIndex(function(i){ return i.name===name && i.type===selType; });
+  var item = { name:name, grm:grm, price:price, type:selType, ts: Date.now() };
+  if (idx > -1) {
+    if (!confirm('"' + name + '" 이(가) 이미 있습니다. 덮어쓸까요?')) return;
+    list[idx] = item;
+  } else {
+    list.push(item);
+  }
+  save(list);
+  document.getElementById('fName').value = '';
+  document.getElementById('fGrm').value  = '';
+  document.getElementById('fPrice').value= '';
+  renderList();
+}
+
+/* 삭제 */
+function deleteItem(name, type) {
+  if (!confirm('"' + name + '" 을 삭제할까요?')) return;
+  var list = load().filter(function(i){ return !(i.name===name && i.type===type); });
+  save(list);
+  renderList();
+}
+
+/* 전체 삭제 */
+function resetAll() {
+  if (!confirm('원지가격 목록을 전체 삭제할까요?')) return;
+  save([]);
+  renderList();
+}
+
+/* 렌더 */
+function fmt(n) { return Math.round(n).toLocaleString('ko-KR'); }
+var TYPE_LABEL = { liner:'라이너', flute:'골심지', center:'중심지' };
+
+function renderList() {
+  var all  = load();
+  var list = sortFilter === 'all' ? all : all.filter(function(i){ return i.type===sortFilter; });
+  var el   = document.getElementById('priceList');
+  document.getElementById('countBadge').textContent = all.length + '종';
+
+  if (list.length === 0) {
+    el.innerHTML = '<div class="empty-msg">등록된 원지가 없습니다</div>';
+    return;
+  }
+
+  el.innerHTML = list.map(function(item) {
+    return '<div class="price-item">' +
+      '<span class="pi-type pi-' + item.type + '">' + TYPE_LABEL[item.type] + '</span>' +
+      '<span class="pi-name">' + item.name + '</span>' +
+      '<span class="pi-grm">' + item.grm + 'g</span>' +
+      '<span class="pi-price">' + fmt(item.price) + '<span> 원/kg</span></span>' +
+      '<button class="del-btn" onclick="deleteItem(\'' + item.name.replace(/'/g,"\\'") + '\',\'' + item.type + '\')">삭제</button>' +
+    '</div>';
+  }).join('');
+}
+
+/* 엔터로 추가 */
+['fName','fGrm','fPrice'].forEach(function(id) {
+  document.getElementById(id).addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') addItem();
+  });
+});
+
+renderList();
+</script>
+</body>
+</html>
